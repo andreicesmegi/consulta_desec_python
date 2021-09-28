@@ -1,19 +1,20 @@
+#!/usr/share/python3
 
 import socket
 import sys
 
+var = sys.argv[1]
+
 s = socket.socket (socket.AF_INET, socket.SOCK_STREAM)
 s.connect(("whois.iana.org",43))
-s.send (sys.argv[1]+"\r\n")
+s.send((var + "\r\n").encode()) # Maneira 1 de concatenar textos e codifica-los para nao apresentar erro de 'str'
 response1 = s.recv(1024).split()
-target = response1[19]
+target = response1[19].decode()
 s.close()
-print (target)
-
 
 s1 = socket.socket (socket.AF_INET, socket.SOCK_STREAM)
 s1.connect((target,43))
-s1.send (sys.argv[1]+"\r\n")
+s1.send((sys.argv[1] + "\r\n").encode()) # Maneira 2 de concatenar textos e codifica-los
 response2 = s1.recv(1024)
 print = (response2)
 
